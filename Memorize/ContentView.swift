@@ -8,35 +8,42 @@
 import SwiftUI
 
 struct ContentView: View {
+    let emojis: [String] = ["👻","🎃","🕷️","🕸️"]
+    // another way to craete array as above line
+    //let emojis: Array<String> = ["👻","🎃","🕷️","🕸️"]
+    
     var body: some View {
         HStack{
-            CardView( isFaceUp: true)
-            CardView()
-            CardView()
-            CardView()
+            //ForEach(0..<4, id:\.self){ index in
+                //CardView( content: emojis[index])
+            ForEach(emojis.indices, id:\.self){ index in
+                CardView( content: emojis[index])
+            }
+            
         }
-        .foregroundColor(.orange)
+        //.foregroundColor(.orange)
         .padding()
     }
 }
 
 struct CardView: View{
-    var isFaceUp: Bool = false
+    let content: String
+    @State var isFaceUp: Bool = true
     
     var body: some View{
-        ZStack(content: {
+        ZStack {
+            let base = RoundedRectangle(cornerRadius: 12)
             if isFaceUp{
-                RoundedRectangle(cornerRadius: 12)
-                    .foregroundColor(.white)
-                
-                RoundedRectangle(cornerRadius: 12)
-                    .strokeBorder(lineWidth: 2)
-                Text("👻").font(.largeTitle)
+                base.fill(.white)
+                base.strokeBorder(lineWidth: 2)
+                Text(content).font(.largeTitle)
             }else{
-                RoundedRectangle(cornerRadius: 12)
-                    .foregroundColor(.orange)
+                base.fill()
             }
-        })
+        }
+        .onTapGesture{
+            isFaceUp.toggle()
+        }
         
     }
 }
