@@ -50,8 +50,7 @@ struct CardView: View{
 
 
 
-
-
+// testing new push
 
 #Preview {
     ContentView()
